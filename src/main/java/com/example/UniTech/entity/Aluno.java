@@ -8,13 +8,13 @@ import lombok.Setter;
 @Table(name = "aluno", schema = "public")
 public class Aluno extends AbstractEntity {
     @Getter @Setter
-    @Column(name = "aluno_ra",nullable = false, unique = true,length = 8)
-    private int ra;
-    @Getter @Setter
     @Column(name = "aluno_nome", nullable = false, length = 100)
     private String nome;
     @Getter @Setter
-    @Column(name = "aluno_rg",nullable = false,unique = true,length = 10)
+    @Column(name = "aluno_ra",nullable = false, unique = true,length = 8)
+    private String ra;
+    @Getter @Setter
+    @Column(name = "aluno_rg",nullable = false,unique = true,length = 15)
     private String rg;
     @Getter @Setter
     @OneToOne(fetch = FetchType.LAZY)

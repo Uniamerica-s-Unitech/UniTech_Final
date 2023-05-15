@@ -13,7 +13,10 @@ import java.util.List;
 public interface MarcaRepository extends JpaRepository<Marca,Long> {
     @Query("FROM Marca WHERE ativo = true")
     List<Marca> findByAtivo();
-
     @Query("FROM Modelo WHERE marca = :marca AND ativo = true")
     List<Modelo> findMarcaAtivoModelo(@Param("marca") final Marca marca);
+    @Query("FROM Marca WHERE nome = :nome")
+    List<Marca> findByNome(@Param("nome") final String nome);
+    @Query("FROM Marca WHERE nome = :nome AND id != :id")
+    List<Marca> findByNomePut(@Param("nome") final String nome, @Param("id") final Long id);
 }

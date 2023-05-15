@@ -15,4 +15,16 @@ public interface AlunoRepository extends JpaRepository<Aluno, Long> {
     List<Aluno> findByAtivo();
     @Query("FROM Ticket WHERE ra = :ra AND ativo = true")
     List<Ticket> findAlunoAtivoTicket (@Param("ra") final Aluno aluno);
+    @Query("FROM Aluno WHERE nome = :nome")
+    List<Aluno> findByNome(@Param("nome") final String nome);
+    @Query("FROM Aluno WHERE nome = :nome AND id != :id")
+    List<Aluno> findByNomePut(@Param("nome") final String nome, @Param("id") final Long id);
+    @Query("FROM Aluno WHERE ra = :ra")
+    List<Aluno> findByRa(@Param("ra") final String ra);
+    @Query("FROM Aluno WHERE ra = :ra AND id != :id")
+    List<Aluno> findByRaPut(@Param("ra") final String cpf, @Param("id") final Long id);
+    @Query("FROM Aluno WHERE rg = :rg")
+    List<Aluno> findByRg(@Param("rg") final String rg);
+    @Query("FROM Aluno WHERE rg = :rg AND id != :id")
+    List<Aluno> findByRgPut(@Param("rg") final String rg, @Param("id") final Long id);
 }
