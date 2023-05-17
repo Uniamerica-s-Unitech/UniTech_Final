@@ -3,8 +3,12 @@ package com.example.UniTech.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.envers.AuditTable;
+import org.hibernate.envers.Audited;
 
+@Audited
 @Entity
+@AuditTable(value = "laptop_audit",schema = "audit")
 @Table(name = "laptop", schema = "public")
 public class Laptop extends AbstractEntity {
     @Getter @Setter
