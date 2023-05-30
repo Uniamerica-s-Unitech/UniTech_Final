@@ -25,7 +25,7 @@ public class Aluno extends AbstractEntity {
     @JoinColumn(name = "aluno_curso",nullable = false)
     private Curso curso;
     @Getter @Setter
-    @Enumerated(EnumType.STRING)
-    @Column(name = "aluno_periodo",nullable = false,length = 20)
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "aluno_periodo",nullable = false)
     private Periodo periodo;
 }

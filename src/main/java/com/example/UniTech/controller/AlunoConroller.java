@@ -43,6 +43,9 @@ public class AlunoConroller {
         catch (DataIntegrityViolationException e){
             return ResponseEntity.internalServerError().body("Error: "+ e.getCause().getCause().getMessage());
         }
+        catch (RuntimeException e){
+            return ResponseEntity.badRequest().body("Error: " + e.getMessage());
+        }
     }
     @PutMapping
     public ResponseEntity<?> editar(@RequestParam("id") final Long id,

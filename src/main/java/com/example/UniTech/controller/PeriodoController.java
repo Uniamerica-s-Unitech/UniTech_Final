@@ -1,38 +1,40 @@
 package com.example.UniTech.controller;
-import com.example.UniTech.entity.Marca;
-import com.example.UniTech.repository.MarcaRepository;
-import com.example.UniTech.service.MarcaService;
+
+import com.example.UniTech.entity.Periodo;
+import com.example.UniTech.repository.PeriodoRepository;
+import com.example.UniTech.service.PeriodoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
 @Controller
-@RequestMapping(value = "/api/marca")
-public class MarcaConroller {
+@RequestMapping(value = "/api/periodo")
+public class PeriodoController {
     @Autowired
-    private MarcaRepository marcaRepository;
+    private PeriodoRepository periodoRepository;
     @Autowired
-    private MarcaService marcaService;
+    private PeriodoService periodoService;
     @GetMapping
     public ResponseEntity<?> findById(@RequestParam("id") final Long id){
-        final Marca marca = this.marcaRepository.findById(id).orElse(null);
-        return marca == null
+        final Periodo periodo = this.periodoRepository.findById(id).orElse(null);
+        return periodo == null
                 ? ResponseEntity.badRequest().body("Nenhom valor encontrado.")
-                : ResponseEntity.ok(marca);
+                : ResponseEntity.ok(periodo);
     }
     @GetMapping("/lista")
     public ResponseEntity<?> listaCompleta(){
-        return ResponseEntity.ok(this.marcaRepository.findAll());
+        return ResponseEntity.ok(this.periodoRepository.findAll());
     }
     @GetMapping("/ativo")
     public ResponseEntity<?> findByAtivo(){
-        return ResponseEntity.ok(this.marcaRepository.findByAtivo());
+        return ResponseEntity.ok(this.periodoRepository.findByAtivo());
     }
     @PostMapping
-    public ResponseEntity<?> cadastrar(@RequestBody final Marca marca){
+    public ResponseEntity<?> cadastrar(@RequestBody final Periodo periodo){
         try{
-            this.marcaService.cadastrar(marca);
+            this.periodoService.cadastrar(periodo);
             return ResponseEntity.ok("Registro cadastrado com sucesso");
         }
         catch (DataIntegrityViolationException e){
@@ -44,10 +46,10 @@ public class MarcaConroller {
     }
     @PutMapping
     public ResponseEntity<?> editar(@RequestParam("id") final Long id,
-                                    @RequestBody final Marca marca
+                                    @RequestBody final Periodo periodo
     ){
         try{
-            this.marcaService.editar(marca,id);
+            this.periodoService.editar(periodo,id);
             return ResponseEntity.ok("Registro cadastrado com sucesso");
         }
         catch (DataIntegrityViolationException e){
@@ -59,8 +61,8 @@ public class MarcaConroller {
     }
     @DeleteMapping
     public ResponseEntity<?> delete(@RequestParam("id") final Long id) {
-        final Marca marcaBanco = this.marcaRepository.findById(id).orElse(null);
-        this.marcaService.deletar(marcaBanco);
+        final Periodo periodoBanco = this.periodoRepository.findById(id).orElse(null);
+        this.periodoService.deletar(periodoBanco);
         return ResponseEntity.ok("Marca deletada com Sucesso");
     }
 }

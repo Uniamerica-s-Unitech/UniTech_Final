@@ -46,6 +46,9 @@ public class CursoConroller {
         catch (DataIntegrityViolationException e){
             return ResponseEntity.internalServerError().body("Error: "+ e.getCause().getCause().getMessage());
         }
+        catch (RuntimeException e){
+            return ResponseEntity.badRequest().body("Error: " + e.getMessage());
+        }
     }
 
     @PutMapping
