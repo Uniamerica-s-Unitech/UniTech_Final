@@ -38,7 +38,6 @@ public class LaptopService {
         } else{
             laptopBanco.setAtivo(Boolean.FALSE);
             this.laptopRepository.save(veiculo);
-            ResponseEntity.ok("Laptop ta em uso");
         }
     }
 }

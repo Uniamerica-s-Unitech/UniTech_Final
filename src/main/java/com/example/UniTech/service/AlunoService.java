@@ -50,10 +50,10 @@ public class AlunoService {
         final Aluno alunoBanco = this.alunoRepository.findById(aluno.getId()).orElse(null);
         List<Ticket> alunoAtivo = this.alunoRepository.findAlunoAtivoTicket(alunoBanco);
         if(alunoAtivo.isEmpty()){
-            alunoBanco.setAtivo(Boolean.FALSE);
-            this.alunoRepository.save(alunoBanco);
+            this.alunoRepository.delete(alunoBanco);
         } else{
-            this.alunoRepository.delete(aluno);
+            alunoBanco.setAtivo(Boolean.FALSE);
+            this.alunoRepository.save(aluno);
         }
     }
 }
