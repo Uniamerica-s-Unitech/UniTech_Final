@@ -11,12 +11,12 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping(value = "/api/ticket")
-public class TicketConroller {
+public class TicketController {
     @Autowired
     private TicketRepository ticketRepository;
     @Autowired
     private TicketService ticketService;
-    @GetMapping
+    @GetMapping("/{id}")
     public ResponseEntity<?> findById(@RequestParam("id") final Long id) {
         final Ticket ticket = this.ticketRepository.findById(id).orElse(null);
         return ticket == null
@@ -43,13 +43,13 @@ public class TicketConroller {
             return ResponseEntity.badRequest().body("Error: " + e.getMessage());
         }
     }
-    @PutMapping
-    public ResponseEntity<?> editar(@RequestParam("id") final Long id,
+    @PutMapping("/{id}")
+    public ResponseEntity<?> editar(@PathVariable("id") final Long id,
                                     @RequestBody final Ticket ticket
     ) {
         try {
             this.ticketService.editar(ticket,id);
-            return ResponseEntity.ok("Registro cadastrado com sucesso");
+            return ResponseEntity.ok("Registro atualizado com sucesso");
         } catch (DataIntegrityViolationException e) {
             return ResponseEntity.internalServerError().body("Error: " + e.getCause().getCause().getMessage());
         } catch (RuntimeException e) {
@@ -57,8 +57,8 @@ public class TicketConroller {
         }
     }
 
-    @DeleteMapping
-    public ResponseEntity<?> delete(@RequestParam("id") final Long id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable("id") final Long id) {
         final Ticket ticket = this.ticketRepository.findById(id).orElse(null);
         try {
             this.ticketService.deletar(ticket);

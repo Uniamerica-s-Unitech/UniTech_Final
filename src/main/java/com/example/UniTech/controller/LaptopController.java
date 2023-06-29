@@ -9,16 +9,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping(value = "/api/laptop")
-public class LaptopConroller {
+public class LaptopController {
     @Autowired
     private LaptopRepository laptopRepository;
     @Autowired
     private LaptopService laptopService;
-    @GetMapping
-    public ResponseEntity<?> findById(@RequestParam("id") final Long id){
+    @GetMapping("/{id}")
+    public ResponseEntity<?> findByIdRequest(@PathVariable("id") final Long id){
+
         final Laptop laptop = this.laptopRepository.findById(id).orElse(null);
         return laptop == null
-                ? ResponseEntity.badRequest().body("Nenhom valor encontrado.")
+                ? ResponseEntity.badRequest().body("Nenhum valor Encontrado")
                 : ResponseEntity.ok(laptop);
     }
     @GetMapping("/lista")
@@ -43,13 +44,13 @@ public class LaptopConroller {
             return ResponseEntity.badRequest().body("Error: " + e.getMessage());
         }
     }
-    @PutMapping
-    public ResponseEntity<?> editar(@RequestParam("id") final Long id,
+    @PutMapping("/{id}")
+    public ResponseEntity<?> editar(@PathVariable("id") final Long id,
                                     @RequestBody final Laptop laptop
     ){
         try{
             this.laptopService.editar(laptop,id);
-            return ResponseEntity.ok("Registro cadastrado com sucesso");
+            return ResponseEntity.ok("Registro atualizado com sucesso");
         }
         catch (DataIntegrityViolationException e){
             return ResponseEntity.internalServerError().body("Error: " + e.getCause().getCause().getMessage());
@@ -58,8 +59,8 @@ public class LaptopConroller {
             return ResponseEntity.internalServerError().body("Error: " + e.getMessage());
         }
     }
-    @DeleteMapping
-    public ResponseEntity<?> delete(@RequestParam("id") final Long id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable("id") final Long id) {
         final Laptop laptopBanco = this.laptopRepository.findById(id).orElse(null);
         this.laptopService.deletar(laptopBanco);
         return ResponseEntity.ok("Laptop deletado com Sucesso");

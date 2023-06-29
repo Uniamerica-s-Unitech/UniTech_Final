@@ -14,7 +14,7 @@ public interface CursoRepository extends JpaRepository<Curso,Long> {
     @Query("FROM Curso WHERE ativo = true")
     List<Curso> findByAtivo();
     @Query("FROM Aluno WHERE curso = :curso AND ativo = true")
-    List<Aluno> findCursoAtivoAluno (@Param("curso") final Curso curso);
+    List<Aluno> findCursoAtivoAluno(@Param("curso") final Curso curso);
     @Query("FROM Curso WHERE nome = :nome")
     List<Curso> findByNome(@Param("nome") final String nome);
     @Query("FROM Curso WHERE nome = :nome AND id != :id")

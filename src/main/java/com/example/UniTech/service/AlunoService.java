@@ -37,7 +37,7 @@ public class AlunoService {
         Assert.isTrue(this.alunoRepository.findByRaPut(aluno.getRa(),id).isEmpty(),"Já existe essa ra");
         Assert.isTrue(this.alunoRepository.findByRgPut(aluno.getRg(),id).isEmpty(),"ja existe esse rg");
         String raValido = "\\d{6}";
-        String rgValido = "\\d{3}\\.?\\d{3}\\\\.?\\d{3}-?\\d{2}";
+        String rgValido = "\\d{3}\\.?\\d{3}\\.?\\d{3}-?\\d{2}";
         Assert.isTrue(aluno.getRa().matches(raValido),"Formato da ra invalido");
         Assert.isTrue(aluno.getRg().matches(rgValido),"Formato do rg invalido");
         Assert.isTrue(aluno.getCurso() != null,"Curso nao incontrado");

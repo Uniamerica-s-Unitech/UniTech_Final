@@ -1,46 +1,38 @@
 package com.example.UniTech.controller;
-
-import com.example.UniTech.entity.Aluno;
-import com.example.UniTech.entity.Curso;
-import com.example.UniTech.repository.CursoRepository;
-import com.example.UniTech.service.CursoService;
+import com.example.UniTech.entity.Modelo;
+import com.example.UniTech.repository.ModeloRepository;
+import com.example.UniTech.service.ModeloService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-
 @Controller
-@RequestMapping(value = "/api/curso")
-public class CursoConroller {
+@RequestMapping(value = "/api/modelo")
+public class ModeloController {
     @Autowired
-    private CursoRepository cursoRepository;
+    private ModeloRepository modeloRepository;
     @Autowired
-    private CursoService cursoService;
-    @GetMapping
+    private ModeloService modeloService;
+    @GetMapping("/{id}")
     public ResponseEntity<?> findById(@RequestParam("id") final Long id){
-        final Curso curso = this.cursoRepository.findById(id).orElse(null);
-        return curso == null
+        final Modelo modelo = this.modeloRepository.findById(id).orElse(null);
+        return modelo == null
                 ? ResponseEntity.badRequest().body("Nenhom valor encontrado.")
-                : ResponseEntity.ok(curso);
+                : ResponseEntity.ok(modelo);
     }
     @GetMapping("/lista")
     public ResponseEntity<?> listaCompleta(){
-        return ResponseEntity.ok(this.cursoRepository.findAll());
+        return ResponseEntity.ok(this.modeloRepository.findAll());
     }
-
     @GetMapping("/ativo")
     public ResponseEntity<?> findByAtivo(){
-        return ResponseEntity.ok(this.cursoRepository.findByAtivo());
+        return ResponseEntity.ok(this.modeloRepository.findByAtivo());
     }
-
-
     @PostMapping
-    public ResponseEntity<?> cadastrar(@RequestBody final Curso curso){
+    public ResponseEntity<?> cadastrar(@RequestBody final Modelo modelo){
         try{
-            this.cursoService.cadastrar(curso);
+            this.modeloService.cadastrar(modelo);
             return ResponseEntity.ok("Registro cadastrado com sucesso");
         }
         catch (DataIntegrityViolationException e){
@@ -50,14 +42,13 @@ public class CursoConroller {
             return ResponseEntity.badRequest().body("Error: " + e.getMessage());
         }
     }
-
-    @PutMapping
-    public ResponseEntity<?> editar(@RequestParam("id") final Long id,
-                                    @RequestBody final Curso curso
+    @PutMapping("/{id}")
+    public ResponseEntity<?> editar(@PathVariable("id") final Long id,
+                                    @RequestBody final Modelo modelo
     ){
         try{
-            this.cursoService.editar(curso,id);
-            return ResponseEntity.ok("Registro cadastrado com sucesso");
+            this.modeloService.editar(modelo,id);
+            return ResponseEntity.ok("Registro atualizado com sucesso");
         }
         catch (DataIntegrityViolationException e){
             return ResponseEntity.internalServerError().body("Error: " + e.getCause().getCause().getMessage());
@@ -66,11 +57,10 @@ public class CursoConroller {
             return ResponseEntity.internalServerError().body("Error: " + e.getMessage());
         }
     }
-
-    @DeleteMapping
-    public ResponseEntity<?> delete(@RequestParam("id") final Long id) {
-        final Curso cursoBanco = this.cursoRepository.findById(id).orElse(null);
-        this.cursoService.deletar(cursoBanco);
-        return ResponseEntity.ok("Curso deletado com Sucesso");
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable("id") final Long id) {
+        final Modelo modeloBanco = this.modeloRepository.findById(id).orElse(null);
+        this.modeloService.deletar(modeloBanco);
+        return ResponseEntity.ok("Modelo deletado com Sucesso");
     }
 }

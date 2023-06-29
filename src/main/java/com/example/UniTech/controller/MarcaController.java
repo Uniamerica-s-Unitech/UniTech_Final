@@ -9,12 +9,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping(value = "/api/marca")
-public class MarcaConroller {
+public class MarcaController {
     @Autowired
     private MarcaRepository marcaRepository;
     @Autowired
     private MarcaService marcaService;
-    @GetMapping
+    @GetMapping("/{id}")
     public ResponseEntity<?> findById(@RequestParam("id") final Long id){
         final Marca marca = this.marcaRepository.findById(id).orElse(null);
         return marca == null
@@ -42,13 +42,13 @@ public class MarcaConroller {
             return ResponseEntity.badRequest().body("Error: " + e.getMessage());
         }
     }
-    @PutMapping
-    public ResponseEntity<?> editar(@RequestParam("id") final Long id,
+    @PutMapping("/{id}")
+    public ResponseEntity<?> editar(@PathVariable("id") final Long id,
                                     @RequestBody final Marca marca
     ){
         try{
             this.marcaService.editar(marca,id);
-            return ResponseEntity.ok("Registro cadastrado com sucesso");
+            return ResponseEntity.ok("Registro atualizado com sucesso");
         }
         catch (DataIntegrityViolationException e){
             return ResponseEntity.internalServerError().body("Error: " + e.getCause().getCause().getMessage());
@@ -57,8 +57,8 @@ public class MarcaConroller {
             return ResponseEntity.internalServerError().body("Error: " + e.getMessage());
         }
     }
-    @DeleteMapping
-    public ResponseEntity<?> delete(@RequestParam("id") final Long id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable("id") final Long id) {
         final Marca marcaBanco = this.marcaRepository.findById(id).orElse(null);
         this.marcaService.deletar(marcaBanco);
         return ResponseEntity.ok("Marca deletada com Sucesso");
