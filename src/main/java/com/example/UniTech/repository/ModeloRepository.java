@@ -1,6 +1,6 @@
 package com.example.UniTech.repository;
 
-import com.example.UniTech.entity.Laptop;
+import com.example.UniTech.entity.Notebook;
 import com.example.UniTech.entity.Modelo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -13,8 +13,8 @@ import java.util.List;
 public interface ModeloRepository extends JpaRepository<Modelo,Long> {
     @Query("FROM Modelo WHERE ativo = true")
     List<Modelo> findByAtivo();
-    @Query("FROM Laptop WHERE modelo = :modelo AND ativo = true")
-    List<Laptop> findModeloAtivoLaptop(@Param("modelo") final Modelo modelo);
+    @Query("FROM Notebook WHERE modelo = :modelo AND ativo = true")
+    List<Notebook> findModeloAtivoLaptop(@Param("modelo") final Modelo modelo);
     @Query("FROM Modelo WHERE nome = :nome")
     List<Modelo> findByNome(@Param("nome") final String nome);
     @Query("FROM Modelo WHERE nome = :nome AND id != :id")

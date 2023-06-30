@@ -1,40 +1,40 @@
 package com.example.UniTech.controller;
-import com.example.UniTech.entity.Laptop;
-import com.example.UniTech.repository.LaptopRepository;
-import com.example.UniTech.service.LaptopService;
+import com.example.UniTech.entity.Notebook;
+import com.example.UniTech.repository.NotebookRepository;
+import com.example.UniTech.service.NotebookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 @Controller
-@RequestMapping(value = "/api/laptop")
-public class LaptopController {
+@RequestMapping(value = "/api/notebook")
+public class NotebookController {
     @Autowired
-    private LaptopRepository laptopRepository;
+    private NotebookRepository notebookRepository;
     @Autowired
-    private LaptopService laptopService;
+    private NotebookService notebookService;
     @GetMapping("/{id}")
     public ResponseEntity<?> findByIdRequest(@PathVariable("id") final Long id){
 
-        final Laptop laptop = this.laptopRepository.findById(id).orElse(null);
-        return laptop == null
+        final Notebook notebook = this.notebookRepository.findById(id).orElse(null);
+        return notebook == null
                 ? ResponseEntity.badRequest().body("Nenhum valor Encontrado")
-                : ResponseEntity.ok(laptop);
+                : ResponseEntity.ok(notebook);
     }
     @GetMapping("/lista")
     public ResponseEntity<?> listaCompleta(){
-        return ResponseEntity.ok(this.laptopRepository.findAll());
+        return ResponseEntity.ok(this.notebookRepository.findAll());
     }
 
     @GetMapping("/ativo")
     public ResponseEntity<?> findByAtivo(){
-        return ResponseEntity.ok(this.laptopRepository.findByAtivo());
+        return ResponseEntity.ok(this.notebookRepository.findByAtivo());
     }
     @PostMapping
-    public ResponseEntity<?> cadastrar(@RequestBody final Laptop laptop){
+    public ResponseEntity<?> cadastrar(@RequestBody final Notebook notebook){
         try{
-            this.laptopService.cadastrar(laptop);
+            this.notebookService.cadastrar(notebook);
             return ResponseEntity.ok("Registro cadastrado com sucesso");
         }
         catch (DataIntegrityViolationException e){
@@ -46,10 +46,10 @@ public class LaptopController {
     }
     @PutMapping("/{id}")
     public ResponseEntity<?> editar(@PathVariable("id") final Long id,
-                                    @RequestBody final Laptop laptop
+                                    @RequestBody final Notebook notebook
     ){
         try{
-            this.laptopService.editar(laptop,id);
+            this.notebookService.editar(notebook,id);
             return ResponseEntity.ok("Registro atualizado com sucesso");
         }
         catch (DataIntegrityViolationException e){
@@ -61,8 +61,8 @@ public class LaptopController {
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") final Long id) {
-        final Laptop laptopBanco = this.laptopRepository.findById(id).orElse(null);
-        this.laptopService.deletar(laptopBanco);
-        return ResponseEntity.ok("Laptop deletado com Sucesso");
+        final Notebook notebookBanco = this.notebookRepository.findById(id).orElse(null);
+        this.notebookService.deletar(notebookBanco);
+        return ResponseEntity.ok("Notebook deletado com Sucesso");
     }
 }

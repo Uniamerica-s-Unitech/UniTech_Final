@@ -1,6 +1,6 @@
 package com.example.UniTech.service;
 
-import com.example.UniTech.entity.Laptop;
+import com.example.UniTech.entity.Notebook;
 import com.example.UniTech.entity.Modelo;
 import com.example.UniTech.repository.MarcaRepository;
 import com.example.UniTech.repository.ModeloRepository;
@@ -34,7 +34,7 @@ public class ModeloService{
     @Transactional(rollbackFor = Exception.class)
     public void deletar(final Modelo modelo){
         final Modelo modeloBanco = this.modeloRepository.findById(modelo.getId()).orElse(null);
-        List<Laptop> modeloAtivo = this.modeloRepository.findModeloAtivoLaptop(modeloBanco);
+        List<Notebook> modeloAtivo = this.modeloRepository.findModeloAtivoLaptop(modeloBanco);
         if(modeloAtivo.isEmpty()){
             this.modeloRepository.delete(modeloBanco);
         } else{

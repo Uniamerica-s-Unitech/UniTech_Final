@@ -19,7 +19,7 @@ public class Ticket extends AbstractEntity {
     @Getter @Setter
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_patrimonio",nullable = false, unique = true)
-    private Laptop id_patrimonio;
+    private Notebook patrimonio;
     @Getter @Setter
     @Column(name = "entrega", nullable = false)
     private LocalDateTime dataEntrega;
