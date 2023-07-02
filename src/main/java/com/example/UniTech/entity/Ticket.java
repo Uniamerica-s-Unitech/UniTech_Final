@@ -26,7 +26,4 @@ public class Ticket extends AbstractEntity {
     @Getter @Setter
     @Column(name = "devolusao")
     private LocalDateTime dataDevolucao;
-    @Getter @Setter
-    @Column(name = "comentario_devolucao",length = 500)
-    private String comentarioDevolucao;
 }

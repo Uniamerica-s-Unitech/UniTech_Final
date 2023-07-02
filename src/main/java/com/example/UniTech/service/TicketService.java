@@ -30,7 +30,7 @@ public class TicketService {
     @Transactional(rollbackFor = Exception.class)
     public void deletar(final Ticket ticket){
         final Ticket ticketBanco = this.ticketRepository.findById(ticket.getId()).orElse(null);
-        ticketBanco.setAtivo(Boolean.FALSE);
-        this.ticketRepository.save(ticket);
+            ticketBanco.setAtivo(Boolean.FALSE);
+            this.ticketRepository.delete(ticket);
     }
 }

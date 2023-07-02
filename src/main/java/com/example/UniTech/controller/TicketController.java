@@ -17,7 +17,7 @@ public class TicketController {
     @Autowired
     private TicketService ticketService;
     @GetMapping("/{id}")
-    public ResponseEntity<?> findById(@RequestParam("id") final Long id) {
+    public ResponseEntity<?> findById(@PathVariable("id") final Long id) {
         final Ticket ticket = this.ticketRepository.findById(id).orElse(null);
         return ticket == null
                 ? ResponseEntity.badRequest().body("Nenhom valor encontrado.")
