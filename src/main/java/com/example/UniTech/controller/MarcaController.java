@@ -15,7 +15,7 @@ public class MarcaController {
     @Autowired
     private MarcaService marcaService;
     @GetMapping("/{id}")
-    public ResponseEntity<?> findById(@RequestParam("id") final Long id){
+    public ResponseEntity<?> findById(@PathVariable("id") final Long id){
         final Marca marca = this.marcaRepository.findById(id).orElse(null);
         return marca == null
                 ? ResponseEntity.badRequest().body("Nenhom valor encontrado.")

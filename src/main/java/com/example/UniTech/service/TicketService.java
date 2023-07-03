@@ -13,8 +13,8 @@ public class TicketService {
     private TicketRepository ticketRepository;
     @Transactional(rollbackFor = Exception.class)
     public void cadastrar(final Ticket ticket){
-        Assert.isTrue(ticket.getRa() != null, "Aluno não encontrado");
-        Assert.isTrue(ticket.getPatrimonio() != null, "Notebook não encontrado");
+        Assert.isTrue(ticket.getAlunoId() != null, "Aluno não encontrado");
+        Assert.isTrue(ticket.getNotebookId() != null, "Notebook não encontrado");
         Assert.isTrue(ticket.getDataEntrega() != null, "Entrega está invalida");
         this.ticketRepository.save(ticket);
     }
@@ -22,8 +22,8 @@ public class TicketService {
     public void editar(final Ticket ticket, final Long id){
         final Ticket ticketBanco = this.ticketRepository.findById(id).orElse(null);
         Assert.isTrue(ticketBanco != null || ticketBanco.getId().equals(ticket.getId()), "Não foi possivel identificar o registro informado.");
-        Assert.isTrue(ticket.getRa() != null, "Aluno não encontrado");
-        Assert.isTrue(ticket.getPatrimonio() != null, "Notebook não encontrado");
+        Assert.isTrue(ticket.getAlunoId() != null, "Aluno não encontrado");
+        Assert.isTrue(ticket.getNotebookId() != null, "Notebook não encontrado");
         Assert.isTrue(ticket.getDataEntrega() != null, "Entrega está invalida");
         this.ticketRepository.save(ticket);
     }

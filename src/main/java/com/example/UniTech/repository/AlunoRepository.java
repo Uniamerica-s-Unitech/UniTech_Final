@@ -13,8 +13,8 @@ import java.util.List;
 public interface AlunoRepository extends JpaRepository<Aluno, Long> {
     @Query("FROM Aluno WHERE ativo = true")
     List<Aluno> findByAtivo();
-    @Query("FROM Ticket WHERE ra = :ra AND ativo = true")
-    List<Ticket> findAlunoAtivoTicket (@Param("ra") final Aluno aluno);
+    @Query("FROM Ticket WHERE alunoId = :alunoId AND ativo = true")
+    List<Ticket> findAlunoAtivoTicket (@Param("alunoId") final Aluno aluno);
     @Query("FROM Aluno WHERE nome = :nome")
     List<Aluno> findByNome(@Param("nome") final String nome);
     @Query("FROM Aluno WHERE nome = :nome AND id != :id")

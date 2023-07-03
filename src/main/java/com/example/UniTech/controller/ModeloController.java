@@ -15,7 +15,7 @@ public class ModeloController {
     @Autowired
     private ModeloService modeloService;
     @GetMapping("/{id}")
-    public ResponseEntity<?> findById(@RequestParam("id") final Long id){
+    public ResponseEntity<?> findById(@PathVariable("id") final Long id){
         final Modelo modelo = this.modeloRepository.findById(id).orElse(null);
         return modelo == null
                 ? ResponseEntity.badRequest().body("Nenhom valor encontrado.")

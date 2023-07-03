@@ -13,8 +13,8 @@ import java.util.List;
 public interface NotebookRepository extends JpaRepository<Notebook,Long> {
     @Query("FROM Notebook WHERE ativo = true")
     List<Notebook> findByAtivo();
-    @Query("FROM Ticket WHERE patrimonio = :patrimonio AND ativo = true")
-    List<Ticket> findLaptopAtivoTicket(@Param("patrimonio") final Notebook notebook);
+    @Query("FROM Ticket WHERE notebookId = :notebookId AND ativo = true")
+    List<Ticket> findLaptopAtivoTicket(@Param("notebookId") final Notebook notebook);
     @Query("FROM Notebook WHERE patrimonio = :patrimonio")
     List<Notebook> findByIdPatrimonio(@Param("patrimonio") final String patrimonio);
     @Query("FROM Notebook WHERE patrimonio = :patrimonio AND id != :id")
